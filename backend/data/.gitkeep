@@ -1,0 +1,4 @@
+# Place your CSV file here
+# Default filename: sales_data.csv
+# Or update CSV_FILE_PATH in .env to point to your CSV file location
+

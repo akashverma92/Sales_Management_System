@@ -35,12 +35,17 @@ export interface DashboardPageProps {
 
 export const DashboardPage: React.FC<DashboardPageProps> = ({ searchValue = '' }) => {
     const [filters, setFilters] = useState<FiltersState>(defaultFilters);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const handleFilterChange = (key: keyof FiltersState, value: string) => {
         setFilters(prev => ({ ...prev, [key]: value }));
+        setCurrentPage(1); // Reset to first page when filters change
     };
 
-    const handleReset = () => setFilters(defaultFilters);
+    const handleReset = () => {
+        setFilters(defaultFilters);
+        setCurrentPage(1);
+    };
 
     const effectiveFilters = useMemo(
         () => ({ ...filters, search: searchValue }),
@@ -60,12 +65,16 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ searchValue = '' }
 
             {/* Stats */}
             <section>
-                <StatsPanel />
+                <StatsPanel filters={effectiveFilters} />
             </section>
 
             {/* Data Table */}
             <section>
-                <SalesTable filters={effectiveFilters} />
+                <SalesTable 
+                    filters={effectiveFilters} 
+                    currentPage={currentPage}
+                    onPageChange={setCurrentPage}
+                />
             </section>
         </div>
     );

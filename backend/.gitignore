@@ -21,7 +21,9 @@ Thumbs.db
 *.swp
 *.swo
 
+
+data/*.csv
 *.csv
-.csv_data.csv
+.sales_data.csv
 
 
